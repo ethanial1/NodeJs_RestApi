@@ -25,9 +25,12 @@ async function crearTaskHandler(request, response){
     // Usamos el bodyParser
     await bodyParser(request);
     // imprimimos 
-    console.log(request.body);
+    //console.log(request.body);
+    // Guardamos en la base de datos
+    database.push(request.body);
     response.writeHead(200, {'Content-Type': 'application/json'});
-    response.write('Recibido');
+    // Respondemos el objeto guardato
+    response.write(JSON.stringify(database));
     response.end();
 }
 
