@@ -8,6 +8,10 @@ const http = require('http');
 // response: lo que el servidor puede responder
 http.createServer((request, response) => {
     // Obtenemos las partes del objeto.
-
+    // metodos: get, post, put, delete
     const {url, method} = request;
+    // imprimimos la respuesta
+    console.log(`URL: ${url} - Method: ${method}`);
+
+    response.write('Recibido');
 })
