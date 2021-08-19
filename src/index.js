@@ -36,6 +36,7 @@ const server = http.createServer((request, response) => {
     // Dependiendo del tipo de metodo hacemos algo
     switch(method){
         case "GET":
+            // URL inicial 
             if(url === '/'){
                 // Cabeceras: información del tipo de archivo
                 // En las rest-api enviamos archivos json
@@ -56,6 +57,9 @@ const server = http.createServer((request, response) => {
             }
             break
         case "POST":
+            if(url == '/tareas'){
+
+            }
             break
 
     }
