@@ -13,10 +13,23 @@ const server = http.createServer((request, response) => {
     // imprimimos la respuesta
     console.log(`URL: ${url} - Method: ${method}`);
 
-    // Cabeceras: información del tipo de archivo
-    response.writeHead(200, {'Content-Type': 'text/plan'})
-    response.write('Recibido');
-    response.end();
+    // Dependiendo del tipo de metodo hacemos algo
+    switch(method){
+        case "GET":
+            if(url === '/'){
+                // Cabeceras: información del tipo de archivo
+                // En las rest-api enviamos archivos json
+                response.writeHead(200, {'Content-Type': 'application/json'});
+                // Respuesta a enviar
+                response.write(
+                    {
+                        mensage: "Hello world"
+                    }
+                );
+                response.end();
+            }
+            break
+    }
 });
 
 // Hacemos que el servidor empiece a escuchar
