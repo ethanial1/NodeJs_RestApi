@@ -22,9 +22,12 @@ const server = http.createServer((request, response) => {
                 response.writeHead(200, {'Content-Type': 'application/json'});
                 // Respuesta a enviar
                 response.write(
-                    {
-                        mensage: "Hello world"
-                    }
+                    // Convertimos Json a string 
+                    JSON.stringify(
+                        {
+                            mensage: "Hello world"
+                        }
+                    )
                 );
                 response.end();
             }
