@@ -3,6 +3,9 @@
 // http: permite crear un servidor, manejar las peticiones y respuesta que llegan
 const http = require('http');
 
+// reuerimos el bodyParser
+const {bodyParser} = require('./lib/bodyParser')
+
 // Contsnate que funciona como base de datos
 let database = [];
 
@@ -18,8 +21,14 @@ function getTaskHandler(request, response){
 }
 
 // Crear una tarea
-function crearTaskHandler(){
-
+async function crearTaskHandler(request, response){
+    // Usamos el bodyParser
+    await bodyParser(request);
+    // imprimimos 
+    console.log(request.body);
+    response.writeHead(200, {'Content-Type': 'application/json'});
+    response.write('Recibido');
+    response.end();
 }
 
 
@@ -58,7 +67,7 @@ const server = http.createServer((request, response) => {
             break
         case "POST":
             if(url == '/tareas'){
-
+                crearTaskHandler(request, response);
             }
             break
 

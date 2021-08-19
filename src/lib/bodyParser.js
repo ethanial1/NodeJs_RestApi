@@ -27,3 +27,5 @@ function bodyParser(request){
         })
     });
 }
+
+module.exports = {bodyParser}
