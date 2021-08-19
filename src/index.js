@@ -70,6 +70,27 @@ async function actualizarTaskHander(request, response) {
 
 }
 
+// Eliminar
+async function deleteTaskHandler(request, response) {
+    let {url} = request;
+    // Guardamos el índice 1
+    let idquery = url.split("?")[1]; // id=4
+    let idkey = idquery.split("=")[0]; // id
+    let idValue = idquery.split("=")[1]; // 4
+
+    if(idkey === "id"){
+        // eliminamos un elemento del arreglo
+        database.splice(idValue - 1, 1);
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        response.write(`El elemento ${idValue} se ha eliminado correctamente`);
+        response.end();
+    }else{
+        response.writeHead(400, {'Content-Type': 'text/plain'});
+        response.write('Datos invalido recibidos: ',error.message);
+        response.end();
+    }
+}
+
 // Creamos el servidor, en el hay una funcion que maneja las peticiones
 // request: lo que envia el usuario
 // response: lo que el servidor puede responder
@@ -112,6 +133,9 @@ const server = http.createServer((request, response) => {
             break;
         case "PUT":
             actualizarTaskHander(request, response);
+            break;
+        case "DELETE":
+            deleteTaskHandler(request, response);
             break;
 
     }
