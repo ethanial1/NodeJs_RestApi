@@ -22,16 +22,24 @@ function getTaskHandler(request, response){
 
 // Crear una tarea
 async function crearTaskHandler(request, response){
-    // Usamos el bodyParser
-    await bodyParser(request);
-    // imprimimos 
-    //console.log(request.body);
-    // Guardamos en la base de datos
-    database.push(request.body);
-    response.writeHead(200, {'Content-Type': 'application/json'});
-    // Respondemos el objeto guardato
-    response.write(JSON.stringify(database));
-    response.end();
+    try {
+        // Usamos el bodyParser
+        await bodyParser(request);
+        // imprimimos 
+        //console.log(request.body);
+        // Guardamos en la base de datos
+        database.push(request.body);
+        response.writeHead(200, {'Content-Type': 'application/json'});
+        // Respondemos el objeto guardato
+        response.write(JSON.stringify(database));
+        response.end();
+    } catch (error) {
+        // Respondemos, ha ocurrido un error
+        response.writeHead(200, {'Content-Type': 'text/plain'});
+        // Respondemos el objeto guardato
+        response.write("Error interno del servidor");
+        response.end();
+    }
 }
 
 
