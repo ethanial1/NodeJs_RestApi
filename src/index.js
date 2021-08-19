@@ -42,6 +42,33 @@ async function crearTaskHandler(request, response){
     }
 }
 
+// Para actualizar, necesitamos el id de la tarea y los nuevos datos
+async function actualizarTaskHander(request, response) {
+    try {
+        let {url} = request;
+        // Guardamos el índice 1
+        let idquery = url.split("?")[1]; // id=4
+        let idkey = idquery.split("=")[0]; // id
+        let idValue = idquery.split("=")[1]; // 4
+
+        if(idkey === "id"){
+            await bodyParser(request);
+            database[idValue-1] = request.body; // Actualizamos en la posición dada 
+            response.writeHead(200, {'Content-Type': 'application/json'});
+            response.write(JSON.stringify(database));
+            response.end();
+        }else{
+            response.writeHead(200, {'Content-Type': 'text/plain'});
+            response.write('No se ha podido realizar la actualización');
+            response.end();
+        }
+    } catch (error) {
+        response.writeHead(400, {'Content-Type': 'text/plain'});
+        response.write('Datos invalido recibidos: ',error.message);
+        response.end();
+    }
+
+}
 
 // Creamos el servidor, en el hay una funcion que maneja las peticiones
 // request: lo que envia el usuario
@@ -72,15 +99,20 @@ const server = http.createServer((request, response) => {
                 );
                 response.end();
             }
+            // Solicitamos todas las tareas
             if (url == '/tareas'){
                 getTaskHandler(request, response);
             }
-            break
+            break;
         case "POST":
+            // Creamos una nueva tarea
             if(url == '/tareas'){
                 crearTaskHandler(request, response);
             }
-            break
+            break;
+        case "PUT":
+            actualizarTaskHander(request, response);
+            break;
 
     }
 });
