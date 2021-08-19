@@ -137,6 +137,10 @@ const server = http.createServer((request, response) => {
         case "DELETE":
             deleteTaskHandler(request, response);
             break;
+        default:
+            response.writeHead(404, {'Content-Type': 'text/plain'});
+            response.write('No encontrado');
+            response.end();
 
     }
 });
